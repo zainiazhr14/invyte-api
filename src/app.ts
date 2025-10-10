@@ -4,6 +4,7 @@ import { adminRoutes } from "./modules/admin/routes";
 import { userRoutes } from "./modules/user/routes";
 import openapi from "@elysiajs/openapi";
 import { Logestic } from "logestic";
+import ApiError from "@libs/api-error";
 
 const app = new Elysia()
   .use(
@@ -14,8 +15,27 @@ const app = new Elysia()
       allowedHeaders: ['Content-Type', 'Authorization'],
     })
   )
-  .use(openapi())
+  .use(openapi({
+    path: '/documentation'
+  }))
   .use(Logestic.preset('fancy'))
+  .mapResponse(({ response, set }) => {
+      if ([200, 201].includes(set.status)) {
+        response = {
+          ok: true,
+          data: response
+        }
+      }
+
+      return response
+  })
+  .onError(({ code, error, set }) => {
+    if (error instanceof ApiError) {
+      return { ok: false, error: error.message };
+    } else if (code == 'VALIDATION') {
+      return { ok: false, error: JSON.parse(error.message) };
+    }
+  })
   .guard(
     {
       headers: t.Object({

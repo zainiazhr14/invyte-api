@@ -4,9 +4,9 @@ import { user } from "./user";
 
 export const guest = pgTable('guests', {
   id: uuid('id').primaryKey().defaultRandom(),
-  full_name: varchar('50').notNull(),
-  email: varchar('100').notNull(),
-  phone: varchar('15'),
+  full_name: varchar('full_name').notNull(),
+  email: varchar('email').notNull(),
+  phone: varchar('phone'),
   user_id: uuid('user_id').notNull().references(() => user.id),
 
   createdAt: timestamp("created_at").defaultNow().notNull(),

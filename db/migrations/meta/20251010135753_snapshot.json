@@ -1,6 +1,6 @@
 {
-  "id": "e9f6981b-d4eb-4462-922e-fdbf13200f0c",
-  "prevId": "c25a40de-8eed-4ecf-b7aa-fed0e2130afb",
+  "id": "03f2ca22-5bb7-4a66-bddb-cb894b7328bc",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -8,24 +8,30 @@
       "name": "admins",
       "schema": "",
       "columns": {
-        "50": {
-          "name": "50",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "256": {
-          "name": "256",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
         "id": {
           "name": "id",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
+        },
+        "full_name": {
+          "name": "full_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",
@@ -46,11 +52,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "admins_50_unique": {
-          "name": "admins_50_unique",
+        "admins_username_unique": {
+          "name": "admins_username_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "50"
+            "username"
           ]
         }
       },
@@ -62,30 +68,30 @@
       "name": "guests",
       "schema": "",
       "columns": {
-        "15": {
-          "name": "15",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "50": {
-          "name": "50",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "100": {
-          "name": "100",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
         "id": {
           "name": "id",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
+        },
+        "full_name": {
+          "name": "full_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "user_id": {
           "name": "user_id",
@@ -130,9 +136,9 @@
           "name": "guest_email_phone_user_id_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "100",
+            "email",
             "user_id",
-            "15"
+            "phone"
           ]
         }
       },
@@ -212,30 +218,36 @@
       "name": "users",
       "schema": "",
       "columns": {
-        "50": {
-          "name": "50",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "100": {
-          "name": "100",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "256": {
-          "name": "256",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
         "id": {
           "name": "id",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
+        },
+        "full_name": {
+          "name": "full_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",
@@ -256,11 +268,18 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "users_100_unique": {
-          "name": "users_100_unique",
+        "users_email_unique": {
+          "name": "users_email_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "100"
+            "email"
+          ]
+        },
+        "users_phone_unique": {
+          "name": "users_phone_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "phone"
           ]
         }
       },

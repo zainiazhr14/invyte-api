@@ -103,6 +103,8 @@
     "paths": {
       "@db/*": ["../db/*"],
       "@libs/*": ["libs/*"],
+      "@admin/*": ["modules/admin/*"],
+      "@user/*": ["modules/user/*"],
     }
   }
 }

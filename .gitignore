@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+.vscode
 
 # testing
 /coverage
@@ -25,10 +26,13 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.development
+.env.production
 
 # vercel
 .vercel
@@ -40,3 +44,11 @@ yarn-error.log*
 **/*.log
 package-lock.json
 **/*.bun
+
+bun.lockb
+bun.lock
+prisma/migrations/**/*
+prisma/client/**/
+prisma/client/**/*
+src/libs/prisma/client/**/
+src/libs/prisma/client/**/*

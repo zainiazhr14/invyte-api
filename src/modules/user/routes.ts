@@ -1,8 +1,9 @@
 import AuthMiddleware from "@libs/auth-middleware";
 import Elysia from "elysia";
 import { handleSignIn, handleSignUp } from "./controllers/auth";
-import { SignInReq, SignUpReq } from "./types";
-import jwt from "@elysiajs/jwt";
+import { SignInReq, SignUpReq } from "@user/types/auth";
+import { handleCreateGuest } from "./controllers/guest";
+import { CreateGuestReq } from "./types/guest";
 
 export const userRoutes = new Elysia({
   prefix: 'api/v1/'
@@ -10,21 +11,22 @@ export const userRoutes = new Elysia({
   .group('user', (app) =>
     app
       .use(AuthMiddleware)
-      .get('/dashboard', () => 'Admin Dashboard')
-      .post('/create', () => 'Create Admin')
+      .group('/guest', (app) => 
+        app
+          .post('', handleCreateGuest, {
+            body: CreateGuestReq,
+            tags: ['User Guest']
+          })
+      )
   )
   .group('auth', (app) =>
     app
       .post('/sign-up', handleSignUp, {
         body: SignUpReq,
-        detail: {
-          tags: ['Auth']
-        }
+        tags: ['Auth']
       })
       .post('/sign-in', handleSignIn, {
         body: SignInReq,
-        detail: {
-          tags: ['Auth']
-        }
+        tags: ['Auth']
       })
   )

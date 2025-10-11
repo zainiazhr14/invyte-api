@@ -1,5 +1,5 @@
 import { signIn, signUp } from "@user/services/auth"
-import { SignInReq, SignUpReq } from "@user/types"
+import { SignInReq, SignUpReq } from "@user/types/auth"
 import { Context } from "elysia"
 
 export const handleSignUp = async ({ body }: Context) => {

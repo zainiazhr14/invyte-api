@@ -1,6 +1,6 @@
-import { SignInReq, SignUpReq } from "@user/types";
+import { SignInReq, SignUpReq } from "@user/types/auth";
 import { checkAvailability, hashPassword, verifyPassword } from "@user/utils/auth";
-import { user } from "@db/schemas/user";
+import { UserSchema } from "@db/schemas/user";
 import ApiError from "@libs/api-error";
 
 import db from "@db/index";
@@ -20,7 +20,7 @@ export const signUp = async (body: SignUpReq) => {
     const hashedPassword = await hashPassword(password)
     
     const [newUser] = await db.insert(
-      user
+      UserSchema
     ).values({
       ...body,
       password: hashedPassword
@@ -48,7 +48,7 @@ export const signIn = async (body: SignInReq) => {
 
   let checkPassword = false
   try {
-    const userData = await db.query.user.findFirst({
+    const userData = await db.query.UserSchema.findFirst({
       where: ((user, { eq }) => eq(user.email, email))
     })
 

@@ -1,10 +1,10 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import { admin } from "./schemas/admin";
-import { user } from "./schemas/user";
+import { UserSchema } from "./schemas/user";
 import { setting } from "./schemas/setting";
 import { userSetting } from "./schemas/user-setting";
-import { guest } from "./schemas/guest";
+import { GuestSchema } from "./schemas/guest";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -13,9 +13,9 @@ const pool = new Pool({
 export default drizzle(pool, {
   schema: {
     admin,
-    user,
+    UserSchema,
     setting,
     userSetting,
-    guest
+    GuestSchema
   }
 });

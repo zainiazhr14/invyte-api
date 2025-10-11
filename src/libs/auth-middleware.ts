@@ -1,6 +1,5 @@
 import Elysia from "elysia";
 import ApiError from "./api-error";
-import jwt from "@elysiajs/jwt";
 import db from "@db/index";
 import { verifyAccessToken } from "./jwt";
 
@@ -8,7 +7,7 @@ const AuthMiddleware = new Elysia({
   name: "auth-middleware",
 })
 .derive({
-  as: 'scoped'
+  as: 'global'
 }, async ({ headers, set }) => {
   const bearerToken: string = headers?.['authorization'] ?? '';
   const token = bearerToken?.startsWith('Bearer ')
@@ -21,7 +20,7 @@ const AuthMiddleware = new Elysia({
   const payload = await verifyAccessToken(token);
   if (!payload) throw new ApiError('Unauthorized', 401);
 
-  const user = await db.query.user.findFirst({
+  const user = await db.query.UserSchema.findFirst({
     where: (user, { eq }) => eq(user.id, String(payload.id))
   });
 

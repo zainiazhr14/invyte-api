@@ -4,7 +4,7 @@ import { adminRoutes } from "./modules/admin/routes";
 import { userRoutes } from "./modules/user/routes";
 import openapi from "@elysiajs/openapi";
 import { Logestic } from "logestic";
-import ApiError from "@libs/api-error";
+import ApiError from "@libs/response/error";
 
 const app = new Elysia()
   .use(

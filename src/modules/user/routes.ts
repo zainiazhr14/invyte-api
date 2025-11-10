@@ -1,7 +1,7 @@
-import AuthMiddleware from "@libs/auth-middleware";
+import AuthMiddleware from "@libs/middleware/auth-middleware";
 import Elysia from "elysia";
-import { handleSignIn, handleSignUp } from "./controllers/auth";
-import { SignInReq, SignUpReq } from "@user/types/auth";
+import { handleSignIn, handleSignUp, handleVerifyOTP } from "./controllers/auth";
+import { SignInReq, SignUpReq, VerifyOTPReq } from "@user/types/auth";
 import { handleCreateGuest } from "./controllers/guest";
 import { CreateGuestReq } from "./types/guest";
 
@@ -27,6 +27,10 @@ export const userRoutes = new Elysia({
       })
       .post('/sign-in', handleSignIn, {
         body: SignInReq,
+        tags: ['Auth']
+      })
+      .post('/verify-otp', handleVerifyOTP, {
+        body: VerifyOTPReq,
         tags: ['Auth']
       })
   )

@@ -27,3 +27,13 @@ export const SignInReq = t.Object({
 })
 
 export type SignInReq = Static<typeof SignInReq>;
+
+export const VerifyOTPReq = t.Object({
+  token: t.String(),
+  code: t.String({
+    minLength: 6,
+    maxLength: 6
+  })
+})
+
+export type VerifyOTPReq = Static<typeof VerifyOTPReq>;

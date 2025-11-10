@@ -1,0 +1,95 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-all font-family="Inter, Helvetica, Arial, sans-serif" />
+      <mj-text color="#333333" font-size="16px" line-height="24px" />
+      <mj-section background-color="#f8f8f8" padding="0" />
+      <mj-column padding="0" />
+    </mj-attributes>
+    <mj-style>
+      .body-section {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+        overflow: hidden;
+        /* Ensures shadow respects border-radius */
+      }
+
+      .code-box {
+        background-color: #f0f0f0;
+        border-radius: 4px;
+        padding: 16px 0;
+        margin: 24px 0;
+      }
+
+      .code-text {
+        font-size: 32px;
+        font-weight: bold;
+        color: #222222;
+        letter-spacing: 2px;
+      }
+
+      .social-icon {
+        width: 24px;
+        height: 24px;
+        margin: 0 8px;
+        vertical-align: middle;
+      }
+
+      .footer-text {
+        color: #888888;
+        font-size: 12px;
+        line-height: 18px;
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#f0f0f0">
+
+    <mj-section padding-top="40px" padding-bottom="40px">
+      <mj-column>
+
+        <mj-section background-color="#ffffff" css-class="body-section" padding="24px">
+          <mj-column>
+
+            <mj-image src="https://www.invyte-card.site/assets/logo-BfqthCmE.png" alt="Invyte Logo" width="100px" padding-bottom="10px" align="center" />
+
+            <mj-text align="center" font-size="24px" font-weight="bold" color="#222222" padding-top="0" padding-bottom="16px">
+              Verify Invyte Change PIN
+            </mj-text>
+
+            <mj-text align="center" font-size="14px" color="#555555" padding-bottom="24px">
+              We have received a change PIN with the following code. Please enter it in the app where you change PIN for Invyte.
+            </mj-text>
+
+            <mj-section background-color="#f0f0f0" css-class="code-box" padding="0" border-radius="4px">
+              <mj-column>
+                <mj-text align="center" css-class="code-text" padding="0">
+                  {{code}}
+                </mj-text>
+              </mj-column>
+            </mj-section>
+
+            <mj-text align="center" font-size="12px" color="#777777" padding-top="0" padding-bottom="24px">
+              If you did not attempt to sign up but received this email, please disregard it. The code will remain active for 10 minutes.
+            </mj-text>
+
+          </mj-column>
+        </mj-section>
+
+        <mj-spacer height="32px" />
+
+        <mj-social font-size="0" icon-size="24px" mode="horizontal" align="center" padding-bottom="16px">
+          <mj-social-element src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" href="#" css-class="social-icon" />
+          <mj-social-element src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Discord" href="#" css-class="social-icon" />
+          <mj-social-element src="https://cdn-icons-png.flaticon.com/512/61/61109.png" alt="Website" href="#" css-class="social-icon" />
+        </mj-social>
+
+        <mj-text align="center" css-class="footer-text">
+          © 2025 Invyte. All rights reserved.
+        </mj-text>
+
+      </mj-column>
+    </mj-section>
+
+
+  </mj-body>
+</mjml>

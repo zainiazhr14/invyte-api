@@ -1,8 +1,8 @@
-import { GuestSchema } from "@db/schemas/guest";
+import { Guest } from "@db/schemas/guest";
 import { createInsertSchema } from "drizzle-typebox";
 import { Static, t } from "elysia";
 
-const _CreateGuestReq = createInsertSchema(GuestSchema, {
+const _CreateGuestReq = createInsertSchema(Guest, {
   email: t.String({
     format: 'email'
   }),

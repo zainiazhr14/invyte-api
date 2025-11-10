@@ -1,5 +1,5 @@
-import { signIn, signUp } from "@user/services/auth"
-import { SignInReq, SignUpReq } from "@user/types/auth"
+import { signIn, signUp, verifyOTP } from "@user/services/auth"
+import { SignInReq, SignUpReq, VerifyOTPReq } from "@user/types/auth"
 import { Context } from "elysia"
 
 export const handleSignUp = async ({ body }: Context) => {
@@ -8,4 +8,8 @@ export const handleSignUp = async ({ body }: Context) => {
 
 export const handleSignIn = async ({ body }: Context) => {
   return await signIn(body as SignInReq)
+}
+
+export const handleVerifyOTP = async ({ body }: Context) => {
+  return await verifyOTP(body as VerifyOTPReq)
 }

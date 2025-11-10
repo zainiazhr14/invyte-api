@@ -101,10 +101,12 @@
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "baseUrl": "./src",
     "paths": {
-      "@db/*": ["../db/*"],
+      "@db/*": ["db/*"],
+      "@config/*": ["config/*"],
       "@libs/*": ["libs/*"],
       "@admin/*": ["modules/admin/*"],
       "@user/*": ["modules/user/*"],
+      "@file/*": ["modules/file/*"],
     }
   }
 }

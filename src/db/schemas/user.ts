@@ -1,5 +1,7 @@
-import { InferSelectModel } from "drizzle-orm";
+import { InferSelectModel, relations } from "drizzle-orm";
 import { pgTable, varchar, timestamp, uuid } from "drizzle-orm/pg-core";
+import { OneTimePassword } from "./one-time-password";
+import { Guest } from "./guest";
 
 
 export const User = pgTable('users', {
@@ -15,6 +17,9 @@ export const User = pgTable('users', {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-
+export const userRelations = relations(User, ({ many }) => ({
+  oneTimePasswords: many(OneTimePassword),
+  guests: many(Guest)
+}))
 
 export type User = InferSelectModel<typeof User>;

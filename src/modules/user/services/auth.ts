@@ -22,17 +22,20 @@ import {
   generateRandomString 
 } from "@libs/core/generator";
 import { eq } from "drizzle-orm";
+import renderMjmlEmail from "@libs/mailer/render";
+import mailer from "@libs/mailer";
+import { env } from "@config/env";
 
 
 export const signUp = async (body: SignUpReq) => {
   const { email, phone, password } = body;
 
   try {
-    const avail = await checkAvailability({
+    const exist = await checkAvailability({
       email, phone
     });
 
-    if (!avail) throw new ApiError('Email / Phone number already registered', 400)
+    if (exist) throw new ApiError('Email / Phone number already registered', 400)
 
     const hashedPassword = await hashPassword(password)
     
@@ -44,7 +47,7 @@ export const signUp = async (body: SignUpReq) => {
     })
     .returning()
 
-    await db.insert(
+    const [otp] = await db.insert(
       OneTimePassword
     ).values({
       user_id: newUser.id,
@@ -54,9 +57,23 @@ export const signUp = async (body: SignUpReq) => {
     })
     .returning()
 
+    const html = await renderMjmlEmail('send-otp-auth.mjml', {
+      code: otp.code
+    })
+
+    const mailOption = {
+      from: env.EMAIL_SMTP_FROM,
+      to: email,
+      subject: 'Verification Code Invyte',
+      html
+    }
+
+    await mailer.sendMail(mailOption)
+
     const { password: _pass, createdAt, updatedAt, ...response } = newUser;
 
     return {
+      token: otp.token,
       user: response
     };
   } catch(e: unknown) {
@@ -101,13 +118,14 @@ export const verifyOTP = async (body: VerifyOTPReq) => {
 
   try {
     const otpData = await db.query.OneTimePassword.findFirst({
-      where: ((otp, { eq, and }) => and(eq(otp.token, token), eq(otp.code, code))),
+      where: ((otp, { eq, and }) => 
+        and(eq(otp.token, token), eq(otp.code, code))),
       with: {
         user: true
       }
     })
 
-    if (!otpData || otpData.code !== code) throw new ApiError('Invalid Token', 400);
+    if (!otpData || otpData.code !== code) throw new ApiError('OTP Invalid', 400);
 
     if (otpData.expired_at! < new Date()) throw new ApiError('Expired Code', 400);
 
@@ -129,6 +147,7 @@ export const verifyOTP = async (body: VerifyOTPReq) => {
     return {
       accessToken,
       refreshToken,
+      user: response
     };
   } catch(e) {
     console.log('VERIFY OTP => ', e)

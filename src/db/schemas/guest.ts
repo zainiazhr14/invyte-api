@@ -1,5 +1,4 @@
 import { pgTable, varchar, timestamp, uuid, unique, pgEnum } from "drizzle-orm/pg-core";
-import { User } from "./user";
 import { InferSelectModel } from "drizzle-orm";
 
 
@@ -13,7 +12,7 @@ export const Guest = pgTable('guests', {
   send_at: timestamp('send_at'),
   send_with: SendWithEnum('send_with').array().notNull().default(['email']),
   
-  user_id: uuid('user_id').notNull().references(() => User.id),
+  user_id: uuid('user_id').notNull(),
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),

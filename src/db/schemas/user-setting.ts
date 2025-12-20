@@ -1,7 +1,7 @@
 import { serial, pgTable, varchar, timestamp, uuid } from "drizzle-orm/pg-core";
 
 
-export const userSetting = pgTable('user_settings', {
+export const UserSetting = pgTable('user_settings', {
   id: uuid('id').primaryKey().defaultRandom(),
   
 

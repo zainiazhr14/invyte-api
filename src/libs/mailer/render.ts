@@ -10,7 +10,7 @@ const replacePlaceholders = (source: string, data: Record<string, any>): string 
 }
 
 const renderMjmlEmail = async (templateName: string, data: Record<string, any>): Promise<string> => {
-  const mjmlTemplatePath = join(__dirname, '../../assets/mail/', templateName)
+  const mjmlTemplatePath = join(__dirname, '../../template/mail/', templateName)
   const mjmlSource = await readFile(mjmlTemplatePath, 'utf-8')
 
   let content = replacePlaceholders(mjmlSource, data);

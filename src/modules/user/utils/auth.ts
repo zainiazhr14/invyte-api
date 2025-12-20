@@ -5,7 +5,7 @@ import {
   hash, 
   verify 
 } from "argon2";
-import { eq, sql } from "drizzle-orm";
+import { eq, or, sql } from "drizzle-orm";
 
 export const checkAvailability = async ({
   email,
@@ -14,29 +14,26 @@ export const checkAvailability = async ({
   email: string | null,
   phone: string | null
 }) => {
-  const queryCondition = [];
+  let condition;
 
-  if (email && !phone) {
-    queryCondition.push(eq(User.email, email))
-  } else if (!email && phone) {
-    queryCondition.push(eq(User.phone, phone))
-  } else if (email && phone) {
-    queryCondition.push(eq(User.email, email), eq(User.phone, phone))
+  if (email && phone) {
+    condition = or(eq(User.email, email), eq(User.phone, phone));
+  } else if (email) {
+    condition = eq(User.email, email);
+  } else if (phone) {
+    condition = eq(User.phone, phone);
+  } else {
+    return true;
   }
 
-  let result = await db
-    .select({ total: sql<string>`COUNT(*)`.as('total') })
-    .from(User)
-    .where(sql`${queryCondition.join(' AND ')}`)
-    .execute();
+  const [result] = await db
+      .select({ total: sql<number>`COUNT(*)`.as('total') })
+      .from(User)
+      .where(condition);
 
-  const total = result[0]['total']
+  console.log(result)
 
-  if (!total || total == '0') {
-    return true
-  }
-
-  return false
+  return result.total != 0;
 }
 
 export const hashPassword = async (password: string) => {

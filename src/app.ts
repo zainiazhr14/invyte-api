@@ -33,7 +33,7 @@ const app = new Elysia()
     if (error instanceof ApiError) {
       return { ok: false, error: error.message };
     } else if (code == 'VALIDATION') {
-      return { ok: false, error: error.detail(error.message) };
+      return { ok: false, error: JSON.parse(error.message) };
     }
   })
   .guard(

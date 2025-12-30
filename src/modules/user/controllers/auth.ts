@@ -2,7 +2,7 @@ import { signIn, signUp, verifyOTP } from "@user/services/auth"
 import { SignInReq, SignUpReq, VerifyOTPReq } from "@user/types/auth"
 import { Context } from "elysia"
 
-export const handleSignUp = async ({ body }: Context) => {
+export const handleSignUp = async ({ body, server }: Context) => {
   return await signUp(body as SignUpReq)
 }
 
